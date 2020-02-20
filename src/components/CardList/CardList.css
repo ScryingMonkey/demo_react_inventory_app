@@ -1,0 +1,9 @@
+.CardList {
+}
+.CardList .card {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}

@@ -1,0 +1,13 @@
+.input-field {
+  border: var(--test-border);
+  /* display: flex;
+  justify-content: space-between; */
+  padding: 0px 30px;
+}
+.input-field>label{
+  align-content: left;
+}
+
+.input-field>textarea{
+  width: 100%;
+}

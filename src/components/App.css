@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+:root {
+  --primary-color: rgb(30, 144, 255);
+  --primary-font-color: rgb(29, 29, 29);
+
+  --button-primary-color: rgb(30, 144, 255, 0.3);
+  --button-hover-color: rgb(30, 144, 255, 0.5);
+  --button-active-color: rgb(30, 144, 255, 0.6);
+
+  --test-border: 1px dotted red;
+}
+body {
+  font: "Roboto", sans-serif 12px, 30px;
+  color: var(--primary-font-color);
+}
+.TopBar header {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--primary-font-color);
+  letter-spacing: 0.2em;
+}
+
+.prompt {
+  width: 250px;
+  height: 50px;
+  text-align: center;
+  margin: auto;
+  padding: 10vh;
+  line-height: 50px;
+  text-align: center;
+  font-family: helvetica, arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--primary-color);
+  letter-spacing: 0.2em;
+}
+.ProductDetail {
+  display: flex;
+  justify-content: center;
+}
+.ProductDetail .container {
+  max-width: 700px;
+  width: 100%;
+}
+.ProductDetail .display-field {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.ProductList > .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media only screen and (max-width: 350) {
+}
+@media only screen and (min-width: 400px) {
+}
+
+@keyframes wiggle {
+  0% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes wobble {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes borderglow {
+  0% {
+    box-shadow: 0 0 0pt 0pt white;
+  }
+  100% {
+    box-shadow: 0 0 3px 1px rgb(0, 0, 0);
+  }
+}
+@keyframes shadowglow {
+  0% {
+    box-shadow: 0 0 calc(var(--glow-magnitude) * 1) #fff,
+      0 0 calc(var(--glow-magnitude) * 2) #fff,
+      0 0 calc(var(--glow-magnitude) * 3) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 4) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 5) var(--glow-dark-color),
+      0 0 calc(var(--glow-magnitude) * 6) var(--glow-dark-color),
+      0 0 calc(var(--glow-magnitude) * 7) var(--glow-dark-color);
+  }
+  100% {
+    box-shadow: 0 0 calc(var(--glow-magnitude) * 2) #fff,
+      0 0 calc(var(--glow-magnitude) * 4) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 6) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 8) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 10) var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 12) rgb(255, 255, 0.2),
+      0 0 calc(var(--glow-magnitude) * 14) rgb(255, 255, 0.1);
+  }
+}

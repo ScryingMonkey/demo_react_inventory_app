@@ -1,0 +1,24 @@
+.display-field {
+  /* width: 30vw; */
+  /* border: 1px dotted red; */
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 30px;
+}
+.display-field > .value,
+.display-field-textfield > .value {
+  align-content: right;
+  border: 1px solid lightgray;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.display-field-textfield {
+  padding: 0px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.display-field > .label,
+.display-field-textfield > .label {
+  font-weight: bold;
+}

@@ -1,0 +1,74 @@
+.Loading {
+}
+
+.Loading body {
+  background: transparent;
+}
+
+.Loading .loader {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-family: helvetica, arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--primary-color);
+  letter-spacing: 0.2em;
+}
+.Loading .loader::before,
+.Loading .loader::after {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: var(--primary-color);
+  position: absolute;
+  -webkit-animation: load 0.7s infinite alternate ease-in-out;
+  animation: load 0.7s infinite alternate ease-in-out;
+}
+.Loading .loader::before {
+  top: 0;
+}
+.Loading .loader::after {
+  bottom: 0;
+}
+
+@-webkit-keyframes load {
+  0% {
+    left: 0;
+    height: 30px;
+    width: 15px;
+  }
+  50% {
+    height: 8px;
+    width: 40px;
+  }
+  100% {
+    left: 235px;
+    height: 30px;
+    width: 15px;
+  }
+}
+
+@keyframes load {
+  0% {
+    left: 0;
+    height: 30px;
+    width: 15px;
+  }
+  50% {
+    height: 8px;
+    width: 40px;
+  }
+  100% {
+    left: 235px;
+    height: 30px;
+    width: 15px;
+  }
+}

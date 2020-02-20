@@ -1,0 +1,41 @@
+.TopBar {
+  display: grid;
+  grid-template-columns: 4fr 3fr 1fr;
+  align-items: center;
+  background-color: var(--primary-color);
+  width: auto;
+  height: fit-content;
+  padding: 10px 30px;
+}
+.TopBar header {
+  display: inline-block;
+  text-align: left;
+}
+.TopBar .searchbar {
+  width: auto;
+}
+.TopBar .hamburger {
+  display: inline-block;
+}
+.TopBar .hamburger > div {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+@media only screen and (max-width: 399px) {
+  .TopBar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .TopBar header {
+    /* display: none !important */
+    font-size: 120%;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+}
+@media only screen and (min-width: 400px) {
+}
