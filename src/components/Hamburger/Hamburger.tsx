@@ -1,8 +1,9 @@
 import React from "react";
 import "./Hamburger.css";
 
+export type HamburgerStates = "" | "back" | "cancel" | "plus";
 export const Hamburger: React.FC<{
-  icon: "" | "back" | "cancel" | "plus";
+  icon: HamburgerStates;
   click: () => void;
 }> = ({ icon, click }) => {
   return (

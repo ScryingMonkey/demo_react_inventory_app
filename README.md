@@ -1,44 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SoftBank Robotics Takehome Project
 
-## Available Scripts
+## Project Summary
 
-In the project directory, you can run:
+This project includes two parts, an api backend and a single page app frontend. The backend is an express server running on Heroku, and implenting the graphql specification. The frontend uses Typescript and React with a heavy reliance on functional components, tsx, and the Hooks and Context apis.
 
-### `yarn start`
+Api calls are handled through a central function in AppState.tsx, use current async/await syntax for error stack tracing. Api calls update a local state, which view components referenence and monitor through the Context api.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Styling is handled by component level css, and overridden by App.css for theming.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Frontend
 
-### `yarn test`
+- `Global State`: I used a simple global context with a few state value fields, and a local array for all products, and a dictionary of functions (described below). Global state is implented using the React Context Api in the App component (App.tsx)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `Global Functions`: The global context makes functions available for manipulating the local context, and additional functions for updating the local state from outside resources (api calls).
 
-### `yarn build`
+- `Async API calls`: Data state is updated by making an api call, which updates the global context, which then triggers renders for components that reference the data that has been changed. This keeps the flow of activity unidirectional and allows for checkpoints in the troubleshooting process.
+  </br></br>Component level listeners (uesEffect hook) monitor for changes that requires a data update (search bar value change, etc). Listeners then call functions on the global context that trigger api calls. Api calls are performed by calling a function on the global context object (context.f.functionName). These functions build a query, which is sent to a central api processing function. based on useEffect watching
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `Detail View via routing`: The detail view (used for displaying, creating and editing products) is displayed based on the url in the browser. This means that a user can bookmark and/or share a page with consistant results.
+  The ProductDetail component monitors the url path and updates itself with a api call when this changes.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- `Top bar icon (mostly for fun)`:
+  The icon in the top right corner of the top bar can take several different states, representing different common icons. In this project the icon is used to add products (from the products view), and from the detail view to go back to the list view.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Backend
 
-### `yarn eject`
+- `Express`: The api interface is served from an express server running on a Heroku cluster. The data base is accessed using the Mongoose library and Mongoose models.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `MongoDB`: The data base is hosted on a Mongo Atlas cluster. There is a collection for products, and another for users.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `Graphql`: The api implements the graphql specification. An interface schema processes queries, which are then fulfilled using a combined resolver.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `Authentication`: Client sends credentials to the api, which validates the user's credentials and returns a JWT with a 1 hour life. Further requests to the api must included the user's JWT in order to be fulfilled.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Moving Forward
 
-## Learn More
+- `Refactor to use filtered data set`: The current architecture assumes that the client will be able to download the entire array of products, which could be become inpractical with very large data sets.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `Authentication`: The current auth flow sends intial credentials in plain text. Credentials should be encrypted in transit using a hash secret provided by the SPA.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `Encryption`: API responses may contain sensitive data, and may need to be encrypted in transit.
+
+- `Tests`: Backend is written in JS and presented multiple runtime errors that needed to be debugged. I would convert to Typescript for type safety (compile rather than runtime bugs) and implement CI unit tests for resolvers.
