@@ -40,7 +40,6 @@ export const LoginPage = props => {
               id="un"
               ref={r => (email = r)}
               placeholder="username@domain.com"
-              value="test@test.com"
             />
             <label htmlFor="pw">Password</label>
             <input
@@ -48,7 +47,6 @@ export const LoginPage = props => {
               type="password"
               ref={r => (password = r)}
               placeholder="password"
-              value="password"
             />
           </div>
           <div className="buttons">

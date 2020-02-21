@@ -8,6 +8,7 @@ export const CardList: React.FC<{
     id: string;
     label: string;
     clickFunc: (event: React.MouseEvent) => void;
+    data?: {};
   }[];
   sf?: SedFunctions;
   sedButtons?: boolean;

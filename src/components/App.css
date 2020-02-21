@@ -44,17 +44,33 @@ body {
 }
 .ProductDetail {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+@media only screen and (min-width: 900px) {
+  .ProductDetail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .ProductDetail .container {
   max-width: 700px;
-  width: 100%;
 }
+.ProductDetail #imageUrl {
+  overflow: hide;
+  height: 5.5em;
+}
+.ProductDetail .img {
+  width: auto;
+  max-height: 800px;
+}
+
 .ProductList > .container {
   display: flex;
   flex-direction: column;
 }
-@media only screen and (min-width: 500px) {
+
+@media only screen and (min-width: 900px) {
   .ProductList > .container {
     display: grid;
     grid-template-columns: 1fr 1fr;

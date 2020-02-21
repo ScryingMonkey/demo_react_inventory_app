@@ -33,7 +33,7 @@ export class Product {
       min: "0",
       step: "1"
     },
-    imageUrl: { valueKey: "imageUrl", label: "Image Url", type: "longtext" }
+    imageUrl: { valueKey: "imageUrl", label: "Image Url", type: "text" }
   };
 
   constructor() {

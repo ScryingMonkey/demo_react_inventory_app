@@ -23,7 +23,7 @@ export const ProductList = () => {
       console.log(e.currentTarget);
       history.push(`/products/${e.currentTarget.id}/display`);
     };
-    return { product: p, id: p._id, label: p.name, clickFunc: click };
+    return { id: p._id, label: p.name, clickFunc: click };
   });
 
   const newProduct = () => {

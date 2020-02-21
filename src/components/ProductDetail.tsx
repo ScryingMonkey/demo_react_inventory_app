@@ -55,15 +55,15 @@ export const ProductDetail: React.FC<{}> = () => {
         setStatus("display");
         f.setTopbarIcon("back", () => history.push(`/products`));
         break;
-      case "new":
+      default:
+        if (path[2] !== "new") {
+          console.log("...case:default");
+          history.push(`/products/new`);
+        }
         console.log("...case:new");
         setProduct(new Product());
         f.setTopbarIcon("back", () => history.push(`/products`));
         setStatus("new");
-        break;
-      default:
-        console.log("...case:default");
-        history.push(`/products/new`);
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,6 +99,7 @@ export const ProductDetail: React.FC<{}> = () => {
           )
         )}
       </div>
+      <img className="img" src={product.imageUrl} alt={product.name} />
     </div>
   );
 };

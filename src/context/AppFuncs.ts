@@ -137,7 +137,11 @@ export const getAppFuncs = (
     },
     createProduct: createProduct,
     deleteProduct: async productId => {
-      const query: string = "";
+      const query: string = `
+        mutation {deleteProduct(data: { 
+          productId:"${productId}"
+        })}
+      `;
       const json = await callApi(query);
       await updateLocalProducts();
       return json.data.deleteProduct as string;
