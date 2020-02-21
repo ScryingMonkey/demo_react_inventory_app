@@ -1,8 +1,10 @@
 import { Product } from "../types/Product";
 import { AppFuncs } from "./AppFuncs";
+import { AuthData } from "../types/_index";
 
 export type AppState = {
   title: string;
+  authData: AuthData;
   state: {
     topbarIcon: "" | "back" | "cancel" | "plus";
     topBarClickHandler: () => void | null;
@@ -12,9 +14,14 @@ export type AppState = {
 };
 export const appState: AppState = {
   title: "SBR Takehome Project",
+  authData: {
+    userId: "",
+    token: "",
+    tokenExpiration: 0
+  },
   state: {
     topbarIcon: "",
-    topBarClickHandler: null
+    topBarClickHandler: () => alert("Menu would go here.")
   },
   products: [],
   f: null

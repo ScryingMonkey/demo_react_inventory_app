@@ -15,13 +15,19 @@ body {
   color: var(--primary-font-color);
 }
 .TopBar header {
-  font-size: 2rem;
-  text-transform: uppercase;
-  font-weight: 400;
   color: var(--primary-font-color);
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 400;
   letter-spacing: 0.2em;
 }
-
+@media only screen and (min-width: 500px) {
+  .TopBar header {
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+  }
+}
 .prompt {
   width: 250px;
   height: 50px;
@@ -44,20 +50,27 @@ body {
   max-width: 700px;
   width: 100%;
 }
-.ProductDetail .display-field {
+.ProductList > .container {
   display: flex;
   flex-direction: column;
-  height: fit-content;
 }
-
-.ProductList > .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+@media only screen and (min-width: 500px) {
+  .ProductList > .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
-
-@media only screen and (max-width: 350) {
+.ProductList > .container .card {
+  margin: 5px;
+  height: 20vh;
+  background-color: var(--button-primary-color);
 }
-@media only screen and (min-width: 400px) {
+.ProductList > .container .card:hover {
+  background-color: var(--button-hover-color);
+}
+.ProductList > .container .card:active,
+.ProductList > .container .card:focus {
+  background-color: var(--button-active-color);
 }
 
 @keyframes wiggle {

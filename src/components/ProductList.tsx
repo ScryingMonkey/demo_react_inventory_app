@@ -7,11 +7,23 @@ export const ProductList = () => {
   const { products, f } = useContext(AppContext);
   const history = useHistory();
 
+  const sedFunctions = {
+    editHandler: (id: string) => {
+      console.log("> ProductList.editHandler()");
+      history.push(`/products/${id}/edit`);
+    },
+    deleteHandler: (id: string) => {
+      f.deleteProduct(id);
+    }
+  };
+
   const productCards = products.map((p, i) => {
     const click = (e: React.MouseEvent) => {
-      history.push(`/products/${e.currentTarget.textContent}`);
+      console.log(`>ProductList.productCards.click(${e})`);
+      console.log(e.currentTarget);
+      history.push(`/products/${e.currentTarget.id}/display`);
     };
-    return { product: p, label: p.name, clickFunc: click };
+    return { product: p, id: p._id, label: p.name, clickFunc: click };
   });
 
   const newProduct = () => {
@@ -19,7 +31,7 @@ export const ProductList = () => {
   };
 
   useEffect(() => {
-    f.setState("plus", newProduct);
+    f.setTopbarIcon("plus", newProduct);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -27,30 +39,15 @@ export const ProductList = () => {
   return (
     <div className="ProductList">
       {productCards.length < 1 ? (
-        <div className="prompt">No breed matches found.</div>
+        <div className="prompt">No product matches found.</div>
       ) : (
-        <CardList items={productCards} className="container" />
+        <CardList
+          items={productCards}
+          className="container"
+          sedButtons={true}
+          sf={sedFunctions}
+        />
       )}
     </div>
   );
 };
-
-// const SaveCancelButtonBar: React.FC<{
-//   cancel: () => void;
-//   save: () => void;
-// }> = ({ cancel, save }) => {
-//   return (
-//     <div className="cb-list-item cb-list-button-bar-2">
-//       <HalfWidthButton
-//         label="Cancel"
-//         type={ButtonType.cancel}
-//         clickHandler={cancel}
-//       />
-//       <HalfWidthButton
-//         label="Save"
-//         type={ButtonType.save}
-//         clickHandler={save}
-//       />
-//     </div>
-//   );
-// };

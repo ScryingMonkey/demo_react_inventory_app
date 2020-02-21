@@ -1,9 +1,18 @@
 .CardList {
 }
-.CardList .card {
+
+.CardList button {
   padding: 0;
   border: none;
-  font: inherit;
-  color: inherit;
   cursor: pointer;
+}
+.CardList .card {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+}
+.CardList button .label {
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

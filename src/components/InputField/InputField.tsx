@@ -22,7 +22,7 @@ export const InputField: React.FunctionComponent<{
   };
 
   return (
-    <div className="input-field">
+    <div className="InputField">
       <label>{props.label}</label>
       {props.type === "longtext" ? (
         <textarea rows={5} onChange={handleChange} className="textbox" />

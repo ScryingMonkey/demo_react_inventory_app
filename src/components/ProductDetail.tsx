@@ -4,9 +4,7 @@ import { DisplayField } from "./DisplayField/DisplayField";
 import { AppContext } from "./App";
 import { Product } from "../types/Product";
 import { useLocation, useHistory } from "react-router-dom";
-// import Edit from "@material-ui/icons/Edit";
-// import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
-// import Save from "@material-ui/icons/Save";
+import { SedCardHeader, SedFunctions } from "./SedCardHeader/SedCardHeader";
 
 export const ProductDetail: React.FC<{}> = () => {
   const [status, setStatus] = useState<"display" | "editing" | "new">(
@@ -16,48 +14,71 @@ export const ProductDetail: React.FC<{}> = () => {
   const [product, setProduct] = useState(new Product());
   const history = useHistory();
 
-  const changeHandler = (key: string, val: string) => {};
-  const save = () => {
-    setStatus("display");
-    f.setProduct(product).then(res => f.updateLocalProducts());
+  const changeHandler = (key: string, val: string) => {
+    product[key] = val;
+    setProduct(product);
   };
-  const edit = () => {
-    setStatus("editing");
-  };
-
-  const deleteProduct = () => {
-    f.deleteProduct(product._id);
-
-    history.push("/products");
+  let sf: SedFunctions = {
+    saveHandler: () => {
+      setStatus("display");
+      f.setProduct(product);
+    },
+    editHandler: () => {
+      history.push(`/products/${product._id}/edit`);
+      setStatus("editing");
+    },
+    deleteHandler: () => {
+      f.deleteProduct(product._id);
+      history.push("/products");
+    }
   };
   const location = useLocation();
   useEffect(() => {
-    const productId = location.pathname.split("/")[2];
-    if (productId === "new") {
-      setProduct(new Product());
-      setStatus("new");
-    } else {
-      setProduct(products.filter(p => (p._id = productId))[0]);
-      setStatus("display");
+    const path = location.pathname.split("/");
+    console.log(`..path: ${path}`);
+    let np = new Product();
+    products.forEach(p => {
+      if (p._id === path[2]) np = p;
+    });
+    setProduct(np);
+
+    switch (path[3]) {
+      case "edit":
+        console.log("...case:edit");
+        setStatus("editing");
+        f.setTopbarIcon("cancel", () =>
+          history.push(`/products/${np._id}/display`)
+        );
+        break;
+      case "display":
+        console.log("...case:display");
+        setStatus("display");
+        f.setTopbarIcon("back", () => history.push(`/products`));
+        break;
+      case "new":
+        console.log("...case:new");
+        setProduct(new Product());
+        f.setTopbarIcon("back", () => history.push(`/products`));
+        setStatus("new");
+        break;
+      default:
+        console.log("...case:default");
+        history.push(`/products/new`);
+        break;
     }
-    f.setState("back", history.goBack);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const fields = Product.productFields;
-  // TODO: Style product input fields
+
   return (
     <div className="ProductDetail">
       <div className="container">
-        <ProductDetailHeader
-          name={product.name}
-          editHandler={edit}
-          deleteHandler={deleteProduct}
-          saveHandler={save}
-        />
+        <SedCardHeader id={product._id} name={product.name} sedFuncs={sf} />
         {Object.keys(fields).map((k: string, i: number) =>
           status === "display" ? (
             <DisplayField
+              key={i}
               label={fields[k].label}
               type={fields[k].type}
               value={product[fields[k].valueKey] as string}
@@ -65,7 +86,7 @@ export const ProductDetail: React.FC<{}> = () => {
             />
           ) : (
             <InputField
-              key={k}
+              key={i}
               name={fields[k].valueKey}
               label={fields[k].label}
               value={product[fields[k].valueKey] as string}
@@ -77,25 +98,6 @@ export const ProductDetail: React.FC<{}> = () => {
             />
           )
         )}
-      </div>
-    </div>
-  );
-};
-
-const ProductDetailHeader: React.FC<{
-  name: string;
-  deleteHandler: () => void;
-  editHandler: () => void;
-  saveHandler: () => void;
-}> = props => {
-  // TODO: Fix Material Icon buttons
-  return (
-    <div className="header">
-      <h1>{props.name}</h1>
-      <div className="pointer">
-        {/* <DeleteOutlined onClick={() => props.deleteHandler()} color="action" />
-        <Edit onClick={() => props.editHandler()} color="action" />
-        <Save onClick={() => props.saveHandler()} color="action" /> */}
       </div>
     </div>
   );

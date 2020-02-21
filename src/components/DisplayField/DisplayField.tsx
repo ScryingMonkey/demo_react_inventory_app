@@ -8,15 +8,14 @@ export const DisplayField: React.FC<{
   valueKey?: string;
 }> = ({ type, label, value, valueKey }) => {
   const noVal = "No Value";
+
   return (
     <div
       id={valueKey}
-      className={
-        type === "longtext" ? "display-field-textfield" : "display-field"
-      }
+      className={`DisplayField${type === " longtext" ? " textfield" : ""}`}
     >
-      <span className="label"> {label} </span>
-      <span className="value"> {value ? value : noVal} </span>
+      <div className="label"> {label} </div>
+      <div className="value"> {value ? value : noVal} </div>
     </div>
   );
 };

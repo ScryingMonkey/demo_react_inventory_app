@@ -1,5 +1,3 @@
-import { AuthData } from "./_index";
-
 type ProductField = {
   valueKey: keyof Product;
   label: string;
@@ -21,6 +19,13 @@ export class Product {
   static productFields: ProductFields = {
     sku: { valueKey: "sku", label: "SKU", type: "text" },
     name: { valueKey: "name", label: "Name", type: "text" },
+    costPrice: {
+      valueKey: "costPrice",
+      label: "Cost Price",
+      type: "number",
+      min: "0",
+      step: "0.01"
+    },
     quantity: {
       valueKey: "quantity",
       label: "Quantity",
@@ -28,15 +33,9 @@ export class Product {
       min: "0",
       step: "1"
     },
-    imageUrl: { valueKey: "imageUrl", label: "Image Url", type: "text" },
-    costPrice: {
-      valueKey: "costPrice",
-      label: "Cost Price",
-      type: "number",
-      min: "0",
-      step: "0.01"
-    }
+    imageUrl: { valueKey: "imageUrl", label: "Image Url", type: "longtext" }
   };
+
   constructor() {
     this._id = "";
     this.sku = "";
@@ -55,9 +54,9 @@ export class Product {
     const np: Product = new Product();
     Object.keys(np).forEach(k => (this[k] = np[k]));
   }
-  setConfig(ad: AuthData) {
-    Object.keys(ad).forEach(k => {
-      this[k] = ad[k];
+  setConfig(p: Product) {
+    Object.keys(p).forEach(k => {
+      this[k] = p[k];
     });
   }
   getObject() {

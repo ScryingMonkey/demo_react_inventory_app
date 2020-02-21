@@ -1,0 +1,15 @@
+.SedCardHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px;
+}
+.SedCardHeader h1 {
+  flex-grow: 1;
+  text-align: left;
+}
+.SedCardHeader .display-field {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}

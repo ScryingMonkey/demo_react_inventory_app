@@ -6,41 +6,15 @@ import { ProductList } from "../components/ProductList";
 
 const base = "https://dry-depths-65688.herokuapp.com/graphql";
 
-const callApi = async (query: string) => {
-  const url = `${base}/${query}`;
-  const requestBody = {
-    query: query
-  };
-
-  try {
-    console.log(`Sending request to ${url}`);
-    const res = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(requestBody),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    assert(
-      res.status === 200,
-      `...received a ${res.status} response from ${res.url}.`
-    );
-    console.log(res);
-    return await res.json();
-  } catch (err) {
-    console.error(`ApiError: ${err.message}`);
-  }
-};
-
 export type AppFuncs = {
-  login: (email: string, password: string) => Promise<AuthData>;
+  login: (email: string, password: string) => Promise<boolean>;
   getProducts: () => Promise<Product[]>;
   // getProduct: (productId: string) => Promise<Product>;
   setProduct: (p: Product) => Promise<string>;
   createProduct: (p: Product) => Promise<string>;
   deleteProduct: (productId: string) => Promise<string>;
   updateLocalProducts: () => void;
-  setState: (
+  setTopbarIcon: (
     topbarIcon: "" | "back" | "cancel" | "plus",
     topBarClickHandler: () => void
   ) => void;
@@ -51,6 +25,38 @@ export const getAppFuncs = (
   context: AppState,
   setContext: MyDispatch
 ): AppFuncs => {
+  const callApi = async (query: string) => {
+    const headers = {
+      "Content-Type": "application/json"
+    };
+    if (context.authData.token) {
+      headers["Authorization"] = "Bearer " + context.authData.token;
+    }
+    const url = `${base}/${query}`;
+    const requestBody = {
+      query: query
+    };
+    try {
+      console.log(`Sending request to ${url}`);
+      console.log(headers);
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(requestBody),
+        headers: headers
+      });
+
+      console.log(res);
+      assert(
+        res.status === 200,
+        `...received a ${res.status} response from ${res.url}.`
+      );
+      console.log(res);
+      return await res.json();
+    } catch (err) {
+      console.error(`ApiError: ${err.message}`);
+    }
+  };
+
   const getProducts = async () => {
     const query = `
       query {
@@ -71,28 +77,43 @@ export const getAppFuncs = (
   };
 
   const createProduct = async (p: Product) => {
+    console.log(">createProduct()");
+    console.log(p);
     const query: string = `
-  {"query": "mutation {
-    createProduct(
-      data:{
-        sku:\"${p.sku}\", name:\"${p.name}\", imageUrl:\"${p.imageUrl}\", costPrice:\"${p.costPrice}\"
-      }) {_id} }"
-  }
-  `;
+      mutation {createProduct(data: { 
+        sku:"${p.sku}", 
+        name:"${p.name}", 
+        imageUrl:"${p.imageUrl}", 
+        costPrice:"${p.costPrice}"
+      }   ) {sku, name} }
+    `;
     const json = await callApi(query);
+    if ("errors" in json) {
+      json.errors.forEach(e => console.error(e.message));
+      return null;
+    }
+    await updateLocalProducts();
     return json.data.createProduct.sku as string;
   };
 
   return {
     login: async (email, password) => {
       const query: string = `
-    {"query": "query {
-        login(email:\"test@test.com\",password:\"password\") 
-        {userId,token,tokenExpiration} 
-    }"}
-    `;
-      const json = await callApi(query);
-      return json.data.login as AuthData;
+        query { 
+          login ( email:"${email}",password:"${password}" ) {userId, token, tokenExpiration}
+        }
+      `;
+      try {
+        const json = await callApi(query);
+        const authData: AuthData = await json.data.login;
+        setContext({
+          ...context,
+          authData: authData
+        });
+        return authData.tokenExpiration > 0;
+      } catch (err) {
+        console.error(`ApiResConversionError: ${err.message}`);
+      }
     },
     getProducts: getProducts,
     setProduct: async (p: Product) => {
@@ -102,11 +123,14 @@ export const getAppFuncs = (
       }
       // else, set the fields on the existing product
       const query: string = `
-    {"query": "mutation {
-      setProduct(data:{_id:\"${p._id}\", quantity:${p.quantity}}) 
-      {_id} }"
-    }
-    `;
+        mutation {setProduct(data: { 
+          _id:"${p._id}", 
+          sku:"${p.sku}", 
+          name:"${p.name}", 
+          imageUrl:"${p.imageUrl}", 
+          costPrice:"${p.costPrice}"
+        }   ) {sku, name} }
+      `;
       const json = await callApi(query);
       await updateLocalProducts();
       return json.data.setProduct._id as string;
@@ -119,10 +143,11 @@ export const getAppFuncs = (
       return json.data.deleteProduct as string;
     },
     updateLocalProducts: updateLocalProducts,
-    setState: (topbarIcon, topBarClickHandler) => {
+    setTopbarIcon: (topbarIcon, topBarClickHandler) => {
       setContext({
         ...context,
         state: {
+          ...context.state,
           topbarIcon: topbarIcon,
           topBarClickHandler: topBarClickHandler
         }

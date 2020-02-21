@@ -1,24 +1,39 @@
-.display-field {
-  /* width: 30vw; */
-  /* border: 1px dotted red; */
+.DisplayField {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: left;
   padding: 0px 30px;
 }
-.display-field > .value,
-.display-field-textfield > .value {
+.DisplayField > .value {
   align-content: right;
   border: 1px solid lightgray;
-  width: 100%;
+  width: 80%;
   word-wrap: break-word;
+  margin: 5px 5px;
+  font-size: 20px;
+  padding: 5px;
 }
 
-.display-field-textfield {
+.textfield {
   padding: 0px 30px;
   display: flex;
   flex-direction: column;
 }
-.display-field > .label,
-.display-field-textfield > .label {
+.DisplayField > .label,
+.DisplayField .textfield > .label {
   font-weight: bold;
+}
+
+@media only screen and (min-width: 500px) {
+  .DisplayField {
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0px;
+  }
+  .DisplayField > .textfield {
+    align-content: right;
+    width: 80%;
+    margin: 0px 0px 0px 20px;
+  }
 }

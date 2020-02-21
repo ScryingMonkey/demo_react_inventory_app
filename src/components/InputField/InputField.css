@@ -1,13 +1,34 @@
-.input-field {
-  border: var(--test-border);
-  /* display: flex;
-  justify-content: space-between; */
+.InputField {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
   padding: 0px 30px;
 }
-.input-field>label{
+.InputField > label {
   align-content: left;
+  font-weight: bold;
 }
+.InputField > input,
+.InputField > textarea {
+  align-content: right;
 
-.input-field>textarea{
-  width: 100%;
+  margin: 5px 5px;
+  border-radius: 3px;
+  font-size: 20px;
+  /* height: 2em; */
+  padding: 5px;
+}
+@media only screen and (min-width: 500px) {
+  .InputField {
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0px;
+  }
+  .InputField > input,
+  .InputField > textarea {
+    align-content: right;
+    width: 80%;
+    margin: 0px 0px 0px 20px;
+  }
 }

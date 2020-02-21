@@ -1,25 +1,24 @@
 import React, { createContext, useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useHistory
+} from "react-router-dom";
 import "./App.css";
 import { appState, AppState } from "../context/AppState";
 import { Loading, TopBar } from "./_index";
 import { ProductList } from "./ProductList";
 import { getAppFuncs, AppFuncs } from "../context/AppFuncs";
 import { ProductDetail } from "./ProductDetail";
+import { LoginPage } from "./LoginPage/LoginPage";
 
 export const AppContext = createContext<AppState>(appState);
 
 const App = () => {
   // global state that will be passed to presentational components
   const [context, setContext] = useState({ ...appState });
-
-  // cf (context functions) is a list of functions that change the global context.
-  // Keeping then here, and distributing them through the global context
-  // allows me to keep presentational components small and dumb.
-  // cf shouldn't be in this file, but I need the setContext function.
-  // In a bigger project I would move these to a factory function that
-  // took the setContext function as an input and returned this object.
-
   const f: AppFuncs = getAppFuncs(context, setContext);
 
   useEffect(() => {
@@ -31,8 +30,8 @@ const App = () => {
 
   useEffect(() => {
     console.log("...products updated");
-    console.log(context.products);
-  }, [context.products]);
+    console.log(context.authData);
+  }, [context.authData]);
 
   return (
     <AppContext.Provider
@@ -50,6 +49,7 @@ const App = () => {
             <div>
               <Switch>
                 <Redirect from="/" to="/products" exact />
+                <Route path={"/login"} component={LoginPage} exact />
                 <Route
                   path={"/products"}
                   component={ProductList}

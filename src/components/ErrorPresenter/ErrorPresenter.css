@@ -1,0 +1,9 @@
+.ErrorPresenter {
+  display: flex;
+  justify-content: center;
+}
+.ErrorPresenter .msg {
+  color: red;
+  font-size: 2em;
+  text-align: center;
+}
