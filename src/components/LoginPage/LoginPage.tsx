@@ -1,9 +1,9 @@
-import assert from "assert";
-import React, { useContext, useState } from "react";
-import "./LoginPage.css";
-import { AppContext } from "../App";
-import { useHistory } from "react-router-dom";
-import { ErrorPresenter } from "../ErrorPresenter/ErrorPresenter";
+import assert from 'assert';
+import React, { useContext, useState } from 'react';
+import './LoginPage.css';
+import { AppContext } from '../App';
+import { useHistory } from 'react-router-dom';
+import { ErrorPresenter } from '../ErrorPresenter/ErrorPresenter';
 
 export const LoginPage = props => {
   let email: HTMLInputElement;
@@ -19,9 +19,9 @@ export const LoginPage = props => {
     e.preventDefault();
     f.login(email.value, password.value)
       .then(res => {
-        assert(res, "Login failure.");
-        history.push("/products");
+        assert(res, 'Login failure.');
         setFailedLogin(false);
+        history.push('/products');
       })
       .catch(err => {
         console.error(err);

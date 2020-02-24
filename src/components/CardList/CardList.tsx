@@ -1,25 +1,32 @@
-import React from "react";
-import "./CardList.css";
-import { SedCardHeader, SedFunctions } from "../SedCardHeader/SedCardHeader";
+import React from 'react';
+import './CardList.css';
+import {
+  SedCardHeader,
+  SedFunctions
+} from '../SedCardHeader/SedCardHeader';
 
 export const CardList: React.FC<{
   className?: string;
   items: {
     id: string;
     label: string;
+    sublabel: string;
     clickFunc: (event: React.MouseEvent) => void;
-    data?: {};
   }[];
   sf?: SedFunctions;
   sedButtons?: boolean;
 }> = ({ className, items, sedButtons, sf }) => {
   return (
-    <div className={"CardList " + className}>
+    <div className={'CardList ' + className}>
       {sedButtons
         ? items.map((item, i) => (
             <button key={i} id={item.id}>
               <div className="card">
-                <SedCardHeader id={item.id} sedFuncs={sf} />
+                <SedCardHeader
+                  name={item.sublabel}
+                  id={item.id}
+                  sedFuncs={sf}
+                />
                 <div
                   className="label"
                   id={item.id}

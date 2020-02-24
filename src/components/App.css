@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
   --primary-color: rgb(30, 144, 255);
@@ -11,8 +11,15 @@
   --test-border: 1px dotted red;
 }
 body {
-  font: "Roboto", sans-serif 12px, 30px;
+  font: 'Roboto', sans-serif 12px, 30px;
   color: var(--primary-font-color);
+}
+
+.App {
+  display: grid;
+  grid-template-areas:
+    'tb'
+    'cp';
 }
 .TopBar header {
   color: var(--primary-font-color);
@@ -88,6 +95,10 @@ body {
 .ProductList > .container .card:focus {
   background-color: var(--button-active-color);
 }
+.ProductList .SedCardHeader h1 {
+  color: rgba(0, 0, 0, 0.507);
+  font-size: 1.25rem;
+}
 
 @keyframes wiggle {
   0% {
@@ -129,19 +140,30 @@ body {
   0% {
     box-shadow: 0 0 calc(var(--glow-magnitude) * 1) #fff,
       0 0 calc(var(--glow-magnitude) * 2) #fff,
-      0 0 calc(var(--glow-magnitude) * 3) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 4) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 5) var(--glow-dark-color),
-      0 0 calc(var(--glow-magnitude) * 6) var(--glow-dark-color),
-      0 0 calc(var(--glow-magnitude) * 7) var(--glow-dark-color);
+      0 0 calc(var(--glow-magnitude) * 3)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 4)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 5)
+        var(--glow-dark-color),
+      0 0 calc(var(--glow-magnitude) * 6)
+        var(--glow-dark-color),
+      0 0 calc(var(--glow-magnitude) * 7)
+        var(--glow-dark-color);
   }
   100% {
     box-shadow: 0 0 calc(var(--glow-magnitude) * 2) #fff,
-      0 0 calc(var(--glow-magnitude) * 4) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 6) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 8) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 10) var(--glow-light-color),
-      0 0 calc(var(--glow-magnitude) * 12) rgb(255, 255, 0.2),
-      0 0 calc(var(--glow-magnitude) * 14) rgb(255, 255, 0.1);
+      0 0 calc(var(--glow-magnitude) * 4)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 6)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 8)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 10)
+        var(--glow-light-color),
+      0 0 calc(var(--glow-magnitude) * 12)
+        rgb(255, 255, 0.2),
+      0 0 calc(var(--glow-magnitude) * 14)
+        rgb(255, 255, 0.1);
   }
 }

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
-import { CardList } from "./CardList/CardList";
-import { AppContext } from "./App";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
+import { CardList } from './CardList/CardList';
+import { AppContext } from './App';
+import { useHistory } from 'react-router-dom';
 
 export const ProductList = () => {
   const { products, f } = useContext(AppContext);
@@ -9,7 +9,7 @@ export const ProductList = () => {
 
   const sedFunctions = {
     editHandler: (id: string) => {
-      console.log("> ProductList.editHandler()");
+      console.log('> ProductList.editHandler()');
       history.push(`/products/${id}/edit`);
     },
     deleteHandler: (id: string) => {
@@ -21,17 +21,24 @@ export const ProductList = () => {
     const click = (e: React.MouseEvent) => {
       console.log(`>ProductList.productCards.click(${e})`);
       console.log(e.currentTarget);
-      history.push(`/products/${e.currentTarget.id}/display`);
+      history.push(
+        `/products/${e.currentTarget.id}/display`
+      );
     };
-    return { id: p._id, label: p.name, clickFunc: click };
+    return {
+      id: p._id,
+      label: p.name,
+      sublabel: p.sku,
+      clickFunc: click
+    };
   });
 
   const newProduct = () => {
-    history.push("/products/new");
+    history.push('/products/new');
   };
 
   useEffect(() => {
-    f.setTopbarIcon("plus", newProduct);
+    f.setTopbarIcon('plus', newProduct);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,7 +46,9 @@ export const ProductList = () => {
   return (
     <div className="ProductList">
       {productCards.length < 1 ? (
-        <div className="prompt">No product matches found.</div>
+        <div className="prompt">
+          No product matches found.
+        </div>
       ) : (
         <CardList
           items={productCards}
