@@ -8,9 +8,9 @@ export const TopBar = () => {
   const { title, authData, state } = useContext(AppContext);
   let history = useHistory();
   useEffect(() => {
-    if (authData.tokenExpiration <= 0) {
-      history.push('/login');
-    }
+    // if (authData.tokenExpiration <= 0) {  //TODO: Uncomment this before pushing to production
+    //   history.push('/login');
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authData.tokenExpiration]);
 

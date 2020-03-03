@@ -44,20 +44,19 @@ export const getAppFuncs = (
     };
     // beginning of api call
     try {
-      // console.log(`Sending request to ${url}`);
+      console.log(`Sending request to ${url}`);
       // console.log(headers);
+      // console.log(JSON.stringify(requestBody));
       const res = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: headers
       });
-
       // throw error if response is not a 200
       assert(
         res.status === 200,
         `...received a ${res.status} response from ${res.url}.`
       );
-
       return await res.json();
     } catch (err) {
       console.error(`ApiError: ${err.message}`);
@@ -104,6 +103,7 @@ export const getAppFuncs = (
         context.products.filter(x => x._id === p._id)
           .length === 0
       ) {
+        console.log('...not in list.  Creating new product.')
         return f.createProduct(p);
       }
       // else, set the fields on the existing product
@@ -112,13 +112,14 @@ export const getAppFuncs = (
           _id:"${p._id}", 
           sku:"${p.sku}", 
           name:"${p.name}", 
+          quantity:${parseInt(p.quantity)},
           imageUrl:"${p.imageUrl}", 
           costPrice:"${p.costPrice}"
-        }   ) {sku, name} }
+        }   ) {_id, sku, name} }
       `;
       const json = await callApi(query);
       await f.updateLocalProducts();
-      return json.data.setProduct._id as string;
+      return json.data.setProduct as string;
     },
     createProduct: async (p: Product) => {
       // console.log('>createProduct()');
@@ -126,9 +127,10 @@ export const getAppFuncs = (
         mutation {createProduct(data: { 
           sku:"${p.sku}", 
           name:"${p.name}", 
+          quantity:${parseInt(p.quantity)},
           imageUrl:"${p.imageUrl}", 
           costPrice:"${p.costPrice}"
-        }   ) {sku, name} }
+        }   ) {_id, sku, name} }
       `;
       const json = await callApi(query);
       if ('errors' in json) {
@@ -143,7 +145,7 @@ export const getAppFuncs = (
         });
       }
       await f.updateLocalProducts();
-      return json.data.createProduct.sku as string;
+      return json.data.createProduct as string;
     },
     deleteProduct: async productId => {
       const query: string = `

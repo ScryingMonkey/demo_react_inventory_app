@@ -63,8 +63,8 @@ export const ProductDetail: React.FC<{}> = () => {
     switch (path[3]) {
       case 'edit':
         setStatus('editing');
-        f.setTopbarIcon('cancel', () =>
-          history.push(`/products/${np._id}/display`)
+        f.setTopbarIcon('back', () =>
+          history.push(`/products`)
         );
         break;
       case 'display':

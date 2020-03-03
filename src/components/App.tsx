@@ -15,6 +15,8 @@ import { Loading, TopBar } from './_index';
 import { ProductList } from './ProductList';
 import { getAppFuncs, AppFuncs } from '../context/AppFuncs';
 import { ProductDetail } from './ProductDetail';
+import { ProductDataTable } from './ProductDataTable';
+import { ProductMaterialTable } from './ProductMaterialTable';
 import { LoginPage } from './LoginPage/LoginPage';
 
 export const AppContext = createContext<AppState>(appState);
@@ -54,7 +56,7 @@ const App = () => {
                 />
                 <Route
                   path={'/products'}
-                  component={ProductList}
+                  component={ProductMaterialTable}
                   exact={true}
                 />
                 <Route
