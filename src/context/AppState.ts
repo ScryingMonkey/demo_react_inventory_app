@@ -24,7 +24,7 @@ const getScreenQuery = ():'pc'|'tablet'|'phone' => {
   console.log(`...screenSize:${screenSize}`);
   if(screenSize >= 1050){ 
     return 'pc';
-  } else if (screenSize > 350 && screenSize < 1050){ 
+  } else if (screenSize > 360 && screenSize < 1050){ 
     return 'tablet';
   } else { 
     return 'phone';
