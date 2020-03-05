@@ -10,8 +10,27 @@ export type AppState = {
     topBarClickHandler: () => void | null;
   };
   products: Product[];
+  
+  screenQuery: "pc" | "tablet"|"phone" | null;
   f: AppFuncs | null;
 };
+
+const getScreenQuery = ():'pc'|'tablet'|'phone' => {
+  console.log(`> getScreenQuery()`);
+  const screenSize = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  );
+  console.log(`...screenSize:${screenSize}`);
+  if(screenSize >= 1050){ 
+    return 'pc';
+  } else if (screenSize > 350 && screenSize < 1050){ 
+    return 'tablet';
+  } else { 
+    return 'phone';
+  }
+}
+
 export const appState: AppState = {
   title: "SBR Takehome Project",
   authData: {
@@ -24,6 +43,7 @@ export const appState: AppState = {
     topBarClickHandler: () => alert("Menu would go here.")
   },
   products: [],
+  screenQuery: getScreenQuery(),
   f: null
 };
 export type MyDispatch = React.Dispatch<React.SetStateAction<AppState>>;

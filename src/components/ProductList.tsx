@@ -1,62 +1,33 @@
-import React, { useContext, useEffect } from 'react';
-import { CardList } from './CardList/CardList';
+import React, { useContext } from 'react';
+import { ProductMaterialTable } from './ProductMaterialTable';
+import { ProductCharts } from './ProductCharts';
 import { AppContext } from './App';
-import { useHistory } from 'react-router-dom';
+import { ProductMaterialList } from './ProductMaterialList';
+import { SideBar } from './SideBar';
 
 export const ProductList = () => {
-  const { products, f } = useContext(AppContext);
-  const history = useHistory();
+  const {screenQuery} = useContext(AppContext);
 
-  const sedFunctions = {
-    editHandler: (id: string) => {
-      console.log('> ProductList.editHandler()');
-      history.push(`/products/${id}/edit`);
-    },
-    deleteHandler: (id: string) => {
-      f.deleteProduct(id);
+  const renderProductList = (screenQuery) => {
+    switch (screenQuery){
+      case 'pc':
+        return (
+          <div className="pc">
+            <SideBar />
+            <ProductMaterialTable />
+            <ProductCharts />
+          </div>
+        );
+      case 'tablet':
+        return <ProductMaterialTable />
+      default:
+        return <ProductMaterialList />
     }
-  };
+  }
 
-  const productCards = products.map((p, i) => {
-    const click = (e: React.MouseEvent) => {
-      console.log(`>ProductList.productCards.click(${e})`);
-      console.log(e.currentTarget);
-      history.push(
-        `/products/${e.currentTarget.id}/display`
-      );
-    };
-    return {
-      id: p._id,
-      label: p.name,
-      sublabel: p.sku,
-      clickFunc: click
-    };
-  });
-
-  const newProduct = () => {
-    history.push('/products/new');
-  };
-
-  useEffect(() => {
-    f.setTopbarIcon('plus', newProduct);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // TODO: Style product tiles
   return (
-    <div className="ProductList">
-      {productCards.length < 1 ? (
-        <div className="prompt">
-          No product matches found.
-        </div>
-      ) : (
-        <CardList
-          items={productCards}
-          className="container"
-          sedButtons={true}
-          sf={sedFunctions}
-        />
-      )}
+    <div className="ProductList" >
+      {renderProductList(screenQuery)}
     </div>
   );
 };

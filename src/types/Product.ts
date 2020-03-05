@@ -1,4 +1,4 @@
-type ProductField = {
+export type ProductField = {
   valueKey: keyof Product;
   label: string;
   type: string;
@@ -54,9 +54,9 @@ export class Product {
     const np: Product = new Product();
     Object.keys(np).forEach(k => (this[k] = np[k]));
   }
-  setConfig(p: Product) {
-    Object.keys(p).forEach(k => {
-      this[k] = p[k];
+  setConfig(o:{[key:string]:any}) {
+    Object.keys(o).forEach(k => {
+      this[k] = o[k];
     });
   }
   getObject() {

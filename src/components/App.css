@@ -2,7 +2,9 @@
 
 :root {
   --primary-color: rgb(30, 144, 255);
+  --primary-dark-color: rgb(15, 71, 126);
   --primary-font-color: rgb(29, 29, 29);
+  --inverse-font-color: rgb(242, 249, 255);
 
   --button-primary-color: rgb(30, 144, 255, 0.3);
   --button-hover-color: rgb(30, 144, 255, 0.5);
@@ -13,6 +15,11 @@
 body {
   font: 'Roboto', sans-serif 12px, 30px;
   color: var(--primary-font-color);
+}
+
+#modal-root {
+  position:fixed;
+  z-index: 9999;
 }
 
 .App {
@@ -72,11 +79,16 @@ body {
   max-height: 800px;
 }
 
-.ProductList > .container {
-  display: flex;
-  flex-direction: column;
+.ProductList > .pc {
+  display:grid;
+  grid-template-columns: 1fr 5fr 2fr;
+  grid-column-gap: 5px;
+  height: 100vh;
 }
-
+.SideBar {
+  background-color: var(--primary-color);
+  padding: 15px;
+}
 @media only screen and (min-width: 900px) {
   .ProductList > .container {
     display: grid;
