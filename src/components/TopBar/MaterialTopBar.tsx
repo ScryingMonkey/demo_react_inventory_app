@@ -11,6 +11,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { AppContext } from '../App';
 import { MaterialIconMenu } from '../MaterialIconMenu';
 import { useHistory } from 'react-router-dom';
+import { Search, Cancel } from '@material-ui/icons';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +44,11 @@ const useStyles = makeStyles((theme: Theme) =>
     darkMode: {
         flexGrow: 0.5,
     },
+    searchbar: {
+        margin: '15px',
+        borderRadius: '10px',
+        backgroundColor: 'white'
+    },
     title: {
         display:'inline',
         flexGrow: 1,
@@ -53,9 +60,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MaterialTopBar = () => {
     const classes = useStyles();
     const [darkMode, setDarkMode] = React.useState(false);
+    const [searching, setSearching] = React.useState(false);
     const { title, authData, screenQuery } = useContext(AppContext);
     const history = useHistory();
-    
+
     const handleDarkModeChange = (bool:boolean) => {
         setDarkMode(bool);
         alert('Dark mode not impleneted.')
@@ -89,9 +97,20 @@ export const MaterialTopBar = () => {
             
             {(screenQuery === 'phone') && (
                 <div className={classes.phoneMenu}>
-                    <Typography variant="h6" className={classes.title}>
-                        {title}
-                    </Typography>
+                    {searching 
+                    ? (
+                        <TextField id="search" label="Search" variant="filled"  className={classes.searchbar} />
+                    ):(
+                        <Typography variant="h6" className={classes.title}>
+                            {title}
+                        </Typography>
+                    )}
+                    {searching
+                    ? (
+                        <Cancel onClick={() => setSearching(false)} />
+                    ):( 
+                        <Search onClick={() => setSearching(true)} />
+                    )}
                     <MenuButton menuItems={navMenuItems} classes={classes} />
                 </div>
             )}
